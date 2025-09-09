@@ -129,6 +129,8 @@ export default function Index() {
     [availed]
   );
 
+  const availedIds = useMemo(() => availed.map((o) => o.id), [availed]);
+
   const activeOffers = availed.length;
   const rewardsPotential = useMemo(() => {
     const saved = availed.reduce((s, o) => s + Math.min(o.current, o.target) * 0.02, 0);
