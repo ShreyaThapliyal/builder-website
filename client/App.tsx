@@ -21,10 +21,15 @@ const AppShell = ({ children }: { children: React.ReactNode }) => {
             <div className="h-8 w-8 rounded-lg bg-white/20 backdrop-blur-sm grid place-items-center">
               <span className="text-xs font-bold">SW</span>
             </div>
-            <span className="text-lg font-semibold tracking-tight">SpendWise</span>
+            <span className="text-lg font-semibold tracking-tight">
+              SpendWise
+            </span>
           </a>
           <div className="flex items-center gap-3">
-            <Button variant="secondary" className="bg-white text-primary hover:bg-white/90">
+            <Button
+              variant="secondary"
+              className="bg-white text-primary hover:bg-white/90"
+            >
               Export
             </Button>
             <div className="h-9 w-9 rounded-full bg-white/20 grid place-items-center font-semibold">
@@ -33,9 +38,7 @@ const AppShell = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
       </header>
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
       <footer className="border-t">
         <div className="container py-6 text-sm text-muted-foreground">
           © {new Date().getFullYear()} SpendWise. All rights reserved.

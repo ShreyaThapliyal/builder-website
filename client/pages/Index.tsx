@@ -48,7 +48,9 @@ type Offer = {
 };
 
 const currency = (n: number) =>
-  new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(n);
+  new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(
+    n,
+  );
 
 const initialAvailed: Offer[] = [
   {
@@ -61,9 +63,27 @@ const initialAvailed: Offer[] = [
     status: "availed",
     expiry: "2025-12-31",
     transactions: [
-      { id: "t1", date: "2025-09-01", merchant: "BigBasket", category: "Groceries", amount: 3200 },
-      { id: "t2", date: "2025-09-08", merchant: "Reliance Smart", category: "Groceries", amount: 4500 },
-      { id: "t3", date: "2025-09-17", merchant: "D-Mart", category: "Groceries", amount: 3550 },
+      {
+        id: "t1",
+        date: "2025-09-01",
+        merchant: "BigBasket",
+        category: "Groceries",
+        amount: 3200,
+      },
+      {
+        id: "t2",
+        date: "2025-09-08",
+        merchant: "Reliance Smart",
+        category: "Groceries",
+        amount: 4500,
+      },
+      {
+        id: "t3",
+        date: "2025-09-17",
+        merchant: "D-Mart",
+        category: "Groceries",
+        amount: 3550,
+      },
     ],
   },
   {
@@ -76,9 +96,27 @@ const initialAvailed: Offer[] = [
     status: "availed",
     expiry: "2025-10-15",
     transactions: [
-      { id: "t4", date: "2025-09-03", merchant: "Social", category: "Dining", amount: 2100 },
-      { id: "t5", date: "2025-09-13", merchant: "Barbeque Nation", category: "Dining", amount: 2650 },
-      { id: "t6", date: "2025-09-20", merchant: "Mavs Pizzeria", category: "Dining", amount: 1150 },
+      {
+        id: "t4",
+        date: "2025-09-03",
+        merchant: "Social",
+        category: "Dining",
+        amount: 2100,
+      },
+      {
+        id: "t5",
+        date: "2025-09-13",
+        merchant: "Barbeque Nation",
+        category: "Dining",
+        amount: 2650,
+      },
+      {
+        id: "t6",
+        date: "2025-09-20",
+        merchant: "Mavs Pizzeria",
+        category: "Dining",
+        amount: 1150,
+      },
     ],
   },
 ];
@@ -125,15 +163,21 @@ export default function Index() {
 
   const totalSpent = useMemo(
     () =>
-      availed.reduce((sum, o) => sum + o.transactions.reduce((s, t) => s + t.amount, 0), 0),
-    [availed]
+      availed.reduce(
+        (sum, o) => sum + o.transactions.reduce((s, t) => s + t.amount, 0),
+        0,
+      ),
+    [availed],
   );
 
   const availedIds = useMemo(() => availed.map((o) => o.id), [availed]);
 
   const activeOffers = availed.length;
   const rewardsPotential = useMemo(() => {
-    const saved = availed.reduce((s, o) => s + Math.min(o.current, o.target) * 0.02, 0);
+    const saved = availed.reduce(
+      (s, o) => s + Math.min(o.current, o.target) * 0.02,
+      0,
+    );
     return Math.round(saved);
   }, [availed]);
 
@@ -151,12 +195,23 @@ export default function Index() {
       <section className="container pt-10 pb-4">
         <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Welcome back, Shreya</h1>
-            <p className="text-muted-foreground">Your personalized spending and offers dashboard</p>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+              Welcome back, Shreya
+            </h1>
+            <p className="text-muted-foreground">
+              Your personalized spending and offers dashboard
+            </p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">Download Statement</Button>
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">Add Card</Button>
+            <Button
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary/5"
+            >
+              Download Statement
+            </Button>
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+              Add Card
+            </Button>
           </div>
         </div>
       </section>
@@ -192,33 +247,65 @@ export default function Index() {
               <TrendingUp className="h-5 w-5 text-primary" />
               Offers Availed — Progress Tracker
             </CardTitle>
-            <CardDescription>Track your progress and view transactions under each offer</CardDescription>
+            <CardDescription>
+              Track your progress and view transactions under each offer
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {availed.length === 0 ? (
-              <div className="text-sm text-muted-foreground">No active offers yet. Avail an offer to get started.</div>
+              <div className="text-sm text-muted-foreground">
+                No active offers yet. Avail an offer to get started.
+              </div>
             ) : (
-              <Accordion type="multiple" defaultValue={availedIds} className="w-full">
+              <Accordion
+                type="multiple"
+                defaultValue={availedIds}
+                className="w-full"
+              >
                 {availed.map((offer) => {
-                  const pct = Math.min(100, Math.round((offer.current / offer.target) * 100));
+                  const pct = Math.min(
+                    100,
+                    Math.round((offer.current / offer.target) * 100),
+                  );
                   const completed = pct >= 100 || offer.status === "completed";
                   return (
-                    <AccordionItem key={offer.id} value={offer.id} className="border-b">
+                    <AccordionItem
+                      key={offer.id}
+                      value={offer.id}
+                      className="border-b"
+                    >
                       <AccordionTrigger className="hover:no-underline">
                         <div className="w-full text-left">
                           <div className="flex items-center gap-2">
-                            <span className={cn("h-2 w-2 rounded-full", completed ? "bg-emerald-500" : "bg-primary")} />
+                            <span
+                              className={cn(
+                                "h-2 w-2 rounded-full",
+                                completed ? "bg-emerald-500" : "bg-primary",
+                              )}
+                            />
                             <span className="font-medium">{offer.title}</span>
-                            <Badge variant={completed ? "default" : "secondary"}>{completed ? "Completed" : "In progress"}</Badge>
+                            <Badge
+                              variant={completed ? "default" : "secondary"}
+                            >
+                              {completed ? "Completed" : "In progress"}
+                            </Badge>
                             {offer.expiry && (
-                              <span className="ml-auto text-xs text-muted-foreground">Expires {new Date(offer.expiry).toLocaleDateString()}</span>
+                              <span className="ml-auto text-xs text-muted-foreground">
+                                Expires{" "}
+                                {new Date(offer.expiry).toLocaleDateString()}
+                              </span>
                             )}
                           </div>
-                          <p className="text-sm text-muted-foreground mt-1 truncate">{offer.description}</p>
+                          <p className="text-sm text-muted-foreground mt-1 truncate">
+                            {offer.description}
+                          </p>
                           <div className="mt-3">
                             <Progress value={pct} />
                             <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
-                              <span>{currency(offer.current)} of {currency(offer.target)}</span>
+                              <span>
+                                {currency(offer.current)} of{" "}
+                                {currency(offer.target)}
+                              </span>
                               <span>{pct}%</span>
                             </div>
                           </div>
@@ -228,10 +315,16 @@ export default function Index() {
                         <div className="mt-4 rounded-lg border bg-card">
                           <div className="flex items-center justify-between px-4 py-3">
                             <div className="text-sm">
-                              <div className="font-medium">Transactions under this offer</div>
-                              <div className="text-muted-foreground">Eligible spends contributing to progress</div>
+                              <div className="font-medium">
+                                Transactions under this offer
+                              </div>
+                              <div className="text-muted-foreground">
+                                Eligible spends contributing to progress
+                              </div>
                             </div>
-                            <Badge variant="secondary">{offer.transactions.length} transactions</Badge>
+                            <Badge variant="secondary">
+                              {offer.transactions.length} transactions
+                            </Badge>
                           </div>
                           <ScrollArea className="max-h-[280px]">
                             <Table>
@@ -240,21 +333,32 @@ export default function Index() {
                                   <TableHead>Date</TableHead>
                                   <TableHead>Merchant</TableHead>
                                   <TableHead>Category</TableHead>
-                                  <TableHead className="text-right">Amount</TableHead>
+                                  <TableHead className="text-right">
+                                    Amount
+                                  </TableHead>
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
                                 {offer.transactions.length === 0 ? (
                                   <TableRow>
-                                    <TableCell colSpan={4} className="text-center text-sm text-muted-foreground">No transactions yet</TableCell>
+                                    <TableCell
+                                      colSpan={4}
+                                      className="text-center text-sm text-muted-foreground"
+                                    >
+                                      No transactions yet
+                                    </TableCell>
                                   </TableRow>
                                 ) : (
                                   offer.transactions.map((t) => (
                                     <TableRow key={t.id}>
-                                      <TableCell>{new Date(t.date).toLocaleDateString()}</TableCell>
+                                      <TableCell>
+                                        {new Date(t.date).toLocaleDateString()}
+                                      </TableCell>
                                       <TableCell>{t.merchant}</TableCell>
                                       <TableCell>{t.category}</TableCell>
-                                      <TableCell className="text-right">{currency(t.amount)}</TableCell>
+                                      <TableCell className="text-right">
+                                        {currency(t.amount)}
+                                      </TableCell>
                                     </TableRow>
                                   ))
                                 )}
@@ -275,11 +379,15 @@ export default function Index() {
         <Card>
           <CardHeader>
             <CardTitle>Offers You Can Avail</CardTitle>
-            <CardDescription>Boost your savings with personalized offers</CardDescription>
+            <CardDescription>
+              Boost your savings with personalized offers
+            </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
             {available.length === 0 && (
-              <div className="text-sm text-muted-foreground">You're availing all recommended offers.</div>
+              <div className="text-sm text-muted-foreground">
+                You're availing all recommended offers.
+              </div>
             )}
             {available.map((offer) => (
               <div key={offer.id} className="rounded-lg border p-4">
@@ -287,12 +395,26 @@ export default function Index() {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-medium">{offer.title}</span>
-                      <Badge className="bg-primary/10 text-primary hover:bg-primary/20">{offer.reward}</Badge>
+                      <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
+                        {offer.reward}
+                      </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1">{offer.description}</p>
-                    <p className="text-xs text-muted-foreground mt-2">Spend goal: {currency(offer.target)} • Expires {offer.expiry ? new Date(offer.expiry).toLocaleDateString() : "N/A"}</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {offer.description}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Spend goal: {currency(offer.target)} • Expires{" "}
+                      {offer.expiry
+                        ? new Date(offer.expiry).toLocaleDateString()
+                        : "N/A"}
+                    </p>
                   </div>
-                  <Button onClick={() => handleAvail(offer)} className="shrink-0">Avail</Button>
+                  <Button
+                    onClick={() => handleAvail(offer)}
+                    className="shrink-0"
+                  >
+                    Avail
+                  </Button>
                 </div>
               </div>
             ))}
@@ -317,7 +439,9 @@ function StatCard({
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
+        <CardTitle className="text-sm font-medium text-muted-foreground">
+          {title}
+        </CardTitle>
         <div className="h-9 w-9 rounded-md bg-primary/10 text-primary grid place-items-center">
           {icon}
         </div>
