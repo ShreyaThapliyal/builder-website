@@ -198,7 +198,7 @@ export default function Index() {
             {availed.length === 0 ? (
               <div className="text-sm text-muted-foreground">No active offers yet. Avail an offer to get started.</div>
             ) : (
-              <Accordion type="multiple" className="w-full">
+              <Accordion type="multiple" defaultValue={availedIds} className="w-full">
                 {availed.map((offer) => {
                   const pct = Math.min(100, Math.round((offer.current / offer.target) * 100));
                   const completed = pct >= 100 || offer.status === "completed";
