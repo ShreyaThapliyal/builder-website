@@ -212,7 +212,7 @@ export default function Index() {
                               <span className="ml-auto text-xs text-muted-foreground">Expires {new Date(offer.expiry).toLocaleDateString()}</span>
                             )}
                           </div>
-                          <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{offer.description}</p>
+                          <p className="text-sm text-muted-foreground mt-1 truncate">{offer.description}</p>
                           <div className="mt-3">
                             <Progress value={pct} />
                             <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
