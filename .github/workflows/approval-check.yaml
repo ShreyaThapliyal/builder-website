@@ -39,7 +39,7 @@ jobs:
   job3:
     runs-on: ubuntu-latest
     needs: approval2
-    if: ${{ always() && (needs.job2.result == 'success' }}
+    if: ${{ always() && needs.approval2.result == 'success' }}
     steps:
       - name: Echo in Job 2
         run: echo 'hello'
