@@ -27,3 +27,16 @@ jobs:
     steps:
       - name: Echo in Job 2
         run: echo 'hello'
+  approval2:
+    runs-on: ubuntu-latest
+    needs: job2
+    environment: migration-approval
+    steps:
+      - name: Await approval
+        run: echo 'Approval required to continue...'
+  job3:
+    runs-on: ubuntu-latest
+    needs: approval2
+    steps:
+      - name: Echo in Job 2
+        run: echo 'hello'
