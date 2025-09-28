@@ -9,20 +9,17 @@ on:
         default: 'Hello from workflow input!'
 
 jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo in Job 1
+        run: echo 'hi'
   approval:
     runs-on: ubuntu-latest
     environment: migration-approval
     steps:
       - name: Await approval
         run: echo 'Approval required to continue...'
-
-  job1:
-    runs-on: ubuntu-latest
-    needs: approval
-    steps:
-      - name: Echo in Job 1
-        run: echo 'hi'
-
   job2:
     runs-on: ubuntu-latest
     needs: approval
