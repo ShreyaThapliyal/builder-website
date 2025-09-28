@@ -21,11 +21,11 @@ jobs:
     needs: approval
     steps:
       - name: Echo in Job 1
-        run: echo 'Job 1: ${{ github.event.inputs.common_string }}'
+        run: echo 'hi'
 
   job2:
     runs-on: ubuntu-latest
     needs: approval
     steps:
       - name: Echo in Job 2
-        run: echo 'Job 2: ${{ github.event.inputs.common_string }}'
+        run: echo 'hello'
