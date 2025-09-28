@@ -31,7 +31,7 @@ jobs:
   approval2:
     runs-on: ubuntu-latest
     needs: job2
-    if: ${{ needs.job2.result == 'success' || needs.job2.result == 'skipped' }}
+    if: ${{ always() && (needs.job2.result == 'success' || needs.job2.result == 'skipped') }}
     environment: migration-approval
     steps:
       - name: Await approval
